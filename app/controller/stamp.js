@@ -5,13 +5,15 @@ const { Controller } = require('egg');
 class StampController extends Controller {
   async list(ctx) {
     const {
-      query: { start, count },
+      query: { start, count, from },
       model: { Stamp }
     } = ctx;
     const { config } = this;
     
     const stamp = await Stamp
-      .find({}, 'name date flag pics')
+      .find({
+        from: from
+      }, 'name date flag pics')
       .sort({date: -1})
       .skip(start || 0)
       .limit(count || 10)
